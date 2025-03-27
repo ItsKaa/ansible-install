@@ -1,0 +1,10 @@
+---
+- name: Configure the installed system
+  hosts: all
+  vars_files:
+    - group_vars/all.yml
+  roles:
+    - role: common
+      tags: common
+    - role: yay
+      tags: common

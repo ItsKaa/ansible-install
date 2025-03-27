@@ -1,0 +1,15 @@
+---
+- listen: Delete user
+  name: Remove builduser from sudoers
+  lineinfile:
+    path: /etc/sudoers
+    state: absent
+    regexp: "^{{ builduser_name | regex_escape }} ALL=\\(ALL\\) NOPASSWD: ALL$"
+    validate: '/usr/sbin/visudo -cf %s'
+
+- listen: Delete user
+  name: Delete builduser
+  user:
+    name: "{{ builduser_name }}"
+    state: absent
+    remove: yes

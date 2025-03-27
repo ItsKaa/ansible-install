@@ -1,0 +1,23 @@
+- name: Create the builduser.
+  user:
+    name: "{{ builduser_name }}"
+    shell: /bin/bash
+    update_password: always
+    password: "{{ builduser_password | password_hash('sha512') }}"
+    system: yes
+  notify: Delete user
+  changed_when: yes
+
+
+- name: Print builduser info
+  when: debug_print
+  debug:
+    msg: Created temporary user {{ builduser_name | quote }} with password {{ builduser_password }}
+
+- name: Add builduser to sudoers
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: "^{{ builduser_name | regex_escape }} "
+    line: "{{ builduser_name }} ALL=(ALL) NOPASSWD: ALL"
+    validate: '/usr/sbin/visudo -cf %s'

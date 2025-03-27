@@ -1,0 +1,40 @@
+---
+# Arguments:
+# package_name: name of the package to download and build.
+
+- name: Check if package {{ package_name }} is already installed
+  shell: set -o pipefail || exit 1; pacman -Qsq |
+    { grep '^'{{ package_name | quote }}'$' ; [ $? -lt 2 ]; }
+  register: _package_installed
+  changed_when: no
+
+- name: Make and install {{ package_name }}
+  when: _package_installed.stdout == ""
+  become: true
+  become_user: "{{ builduser_name }}"
+  block:
+    - name: Create temporary directory
+      tempfile:
+        state: directory
+        prefix: ansible.makepkg_
+      register: tempdir
+
+    - name: Print temporary directory for debugging
+      when: debug_print
+      debug:
+        msg: Created temporary build directory {{ tempdir.path }}
+
+    - name: Download package from AUR
+      unarchive:
+        remote_src: yes
+        src: "{{ aur_url }}{{ package_name }}.tar.gz"
+        dest: "{{ tempdir.path }}"
+
+    - name: Run makepkg
+      shell: cd '{{ tempdir.path | quote }}/{{ package_name | quote }}' && makepkg -rsi --noconfirm
+
+  always:
+    - name: Delete temporary directory
+      file:
+        state: absent
+        path: "{{ tempdir.path }}"

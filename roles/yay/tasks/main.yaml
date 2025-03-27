@@ -1,0 +1,12 @@
+---
+- name: Ensure git is installed
+  pacman:
+    name: git
+    state: present
+
+- name: Install yay
+  import_role:
+    name: makepkg
+  vars:
+    packages:
+      - yay
