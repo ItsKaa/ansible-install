@@ -2,48 +2,10 @@
 - name: Upgrade installed packages
   pacman:
     upgrade: true
+    update_cache: true
 
-- name: Install base packages
-  pacman:
-    name:
-      - base
-      - base-devel
-      - cryptsetup
-      - bash-completion
-      - device-mapper
-      - bind
-      - dnsmasq
-      - git
-      - e2fsprogs
-      - inetutils
-      - jfsutils
-      - linux
-      - linux-firmware
-      - linux-headers
-      - logrotate
-      - lvm2
-      - man-db
-      - man-pages
-      - mdadm
-      - nano
-      - netctl
-      - perl
-      - sysfsutils
-      - texinfo
-      - usbutils
-      - vi
-      - xfsprogs
-      - sudo
-      - networkmanager
-      - openssh
-      - python3
-      - accountsservice
-    state: present
+- name: Setup base packages
+  import_tasks: base.yaml
 
-- name: Install font packages
-  pacman:
-    name:
-      - adobe-source-han-sans-cn-fonts
-      - adobe-source-han-sans-jp-fonts
-      - adobe-source-han-sans-kr-fonts
-    state: present
+- name: Setup fonts
+  import_tasks: fonts.yaml

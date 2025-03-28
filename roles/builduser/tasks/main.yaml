@@ -4,9 +4,9 @@
     shell: /bin/bash
     update_password: always
     password: "{{ builduser_password | password_hash('sha512') }}"
-    system: yes
+    system: true
   notify: Delete user
-  changed_when: yes
+  changed_when: true
 
 
 - name: Print builduser info

@@ -2,11 +2,11 @@
 # Arguments:
 # package_name: name of the package to download and build.
 
-- name: Check if package {{ package_name }} is already installed
+- name: Check if package is already installed {{ package_name }}
   shell: set -o pipefail || exit 1; pacman -Qsq |
     { grep '^'{{ package_name | quote }}'$' ; [ $? -lt 2 ]; }
   register: _package_installed
-  changed_when: no
+  changed_when: false
 
 - name: Make and install {{ package_name }}
   when: _package_installed.stdout == ""
@@ -26,12 +26,14 @@
 
     - name: Download package from AUR
       unarchive:
-        remote_src: yes
+        remote_src: true
         src: "{{ aur_url }}{{ package_name }}.tar.gz"
         dest: "{{ tempdir.path }}"
 
     - name: Run makepkg
       shell: cd '{{ tempdir.path | quote }}/{{ package_name | quote }}' && makepkg -rsi --noconfirm
+      register: mkpkg_output
+      changed_when: mkpkg_output.rc != 0
 
   always:
     - name: Delete temporary directory

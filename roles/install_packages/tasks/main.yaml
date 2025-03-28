@@ -1,0 +1,13 @@
+---
+- name: Install packages using yay
+  become: true
+  become_user: "{{ builduser_name }}"
+  command: >
+    yay -S --needed
+      --noconfirm --removemake --combinedupgrade
+      --answerclean none --answeredit none --answerupgrade none --answerdiff none
+      {% for pkg in packages %}
+        {{ pkg | quote }}
+      {% endfor %}
+  register: yay_output
+  changed_when: yay_output.rc != 0

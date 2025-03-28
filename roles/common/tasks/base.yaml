@@ -1,0 +1,43 @@
+---
+- name: Install base packages
+  pacman:
+    name:
+      - base
+      - base-devel
+      - cryptsetup
+      - bash-completion
+      - device-mapper
+      - bind
+      - dnsmasq
+      - git
+      - e2fsprogs
+      - inetutils
+      - jfsutils
+      - linux
+      - linux-firmware
+      - linux-headers
+      - logrotate
+      - lvm2
+      - man-db
+      - man-pages
+      - mdadm
+      - nano
+      - netctl
+      - perl
+      - sysfsutils
+      - texinfo
+      - usbutils
+      - vi
+      - xfsprogs
+      - sudo
+      - networkmanager
+      - openssh
+      - python3
+    state: present
+
+
+- name: Install base packages
+  pacman:
+    name:
+      - accountsservice
+      - discover

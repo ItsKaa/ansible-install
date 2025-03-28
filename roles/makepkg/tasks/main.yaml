@@ -1,5 +1,5 @@
 ---
-- name: Run the makepkg installation.
+- name: Run the makepkg installation
   include_tasks: makepkg.yaml
   loop: "{{ packages }}"
   loop_control:

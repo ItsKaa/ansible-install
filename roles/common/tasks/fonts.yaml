@@ -1,0 +1,8 @@
+---
+- name: Install font packages
+  pacman:
+    name:
+      - adobe-source-han-sans-cn-fonts
+      - adobe-source-han-sans-jp-fonts
+      - adobe-source-han-sans-kr-fonts
+    state: present
