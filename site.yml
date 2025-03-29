@@ -9,3 +9,4 @@
     - role: btrfs
     - role: samsung_g9_fix
     - role: bluetooth
+    - role: nextcloud

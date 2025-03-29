@@ -1,0 +1,26 @@
+---
+- name: Make sure config directory exists
+  file:
+    path: "{{ nextcloud_desktop_config_path }}"
+    owner: "{{ nextcloud_user_unix }}"
+    group: "{{ nextcloud_user_unix }}"
+    state: directory
+    mode: "0755"
+
+
+- name: Put our Nextcloud config file into place
+  template:
+    src: nextcloud.cfg.j2
+    dest: "{{ nextcloud_desktop_config_path }}/nextcloud.cfg"
+    owner: "{{ nextcloud_user_unix }}"
+    group: "{{ nextcloud_user_unix }}"
+    mode: "0644"
+
+- name: Make sure our Nextcloud local directories exist
+  file:
+    path: "{{ item }}"
+    owner: "{{ nextcloud_user_unix }}"
+    group: "{{ nextcloud_user_unix }}"
+    state: directory
+    mode: "0750"
+  loop: "{{ nextcloud_remotes | map(attribute='path') | list }}"

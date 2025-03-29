@@ -1,0 +1,11 @@
+---
+- name: Install Nextcloud desktop client
+  pacman:
+    name: nextcloud-client
+    state: present
+
+- name: Setup Nextcloud config files
+  import_tasks: config.yaml
+
+- name: Setup Nextcloud desktop entry
+  import_tasks: desktop-entry.yaml

@@ -1,0 +1,28 @@
+[General]
+confirmExternalStorage=false
+desktopEnterpriseChannel=daily
+isVfsEnabled=false
+launchOnSystemStartup=true
+newBigFolderSizeLimit=500
+optionalServerNotifications=true
+overrideLocalDir=
+overrideServerUrl=
+promptDeleteAllFiles=false
+showCallNotifications=true
+showChatNotifications=true
+useNewBigFolderSizeLimit=false
+
+[Accounts]
+{% for item in nextcloud_remotes %}
+{{ loop.index0 }}\Folders\{{ loop.index }}\ignoreHiddenFiles=false
+{{ loop.index0 }}\Folders\{{ loop.index }}\localPath={{ item.path }}/
+{{ loop.index0 }}\Folders\{{ loop.index }}\paused=false
+{{ loop.index0 }}\Folders\{{ loop.index }}\targetPath=/
+{{ loop.index0 }}\Folders\{{ loop.index }}\virtualFilesMode=off
+{{ loop.index0 }}\authType=webflow
+{{ loop.index0 }}\url=https://{{ item.remote }}
+{{ loop.index0 }}\dav_user={{ item.username }}
+{{ loop.index0 }}\webflow_user={{ item.username }}
+{{ loop.index0 }}\networkDownloadLimit=0
+{{ loop.index0 }}\networkUploadLimit=0
+{% endfor %}

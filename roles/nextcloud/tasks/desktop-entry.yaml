@@ -1,0 +1,16 @@
+---
+- name: Make sure autostart directory exists
+  file:
+    path: "/home/{{ nextcloud_user_unix }}/.config/autostart"
+    state: directory
+    owner: "{{ nextcloud_user_unix }}"
+    group: "{{ nextcloud_user_unix }}"
+    mode: "0755"
+
+- name: Add Nextcloud desktop client to autostart applications
+  copy:
+    src: Nextcloud.desktop
+    dest: "/home/{{ nextcloud_user_unix }}/.config/autostart/"
+    owner: "{{ nextcloud_user_unix }}"
+    group: "{{ nextcloud_user_unix }}"
+    mode: "0644"

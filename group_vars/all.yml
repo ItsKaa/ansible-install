@@ -16,3 +16,9 @@ btrfs_submodule_names:
     owner: "1000"
     group: "1000"
     mode: "0640"
+nextcloud_user_unix: ENTER_UNIX_USERNAME
+nextcloud_remotes:
+  - name: ENTER_REMOTE_NAME
+    remote: ENTER_REMOTE_URL
+    username: ENTER_NEXTCLOUD_USERNAME
+    path: /nextcloud

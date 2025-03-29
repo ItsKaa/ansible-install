@@ -1,0 +1,3 @@
+---
+nextcloud_desktop_config_path: "/home/{{ nextcloud_user_unix }}/.config/Nextcloud"
+
