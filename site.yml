@@ -5,6 +5,3 @@
     - group_vars/all.yml
   roles:
     - role: common
-      tags: common
-    - role: yay
-      tags: common

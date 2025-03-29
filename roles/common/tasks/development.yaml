@@ -1,0 +1,17 @@
+---
+- name: Install development packages
+  become: true
+  become_user: "{{ builduser_name }}"
+  yay:
+    name:
+      - appmenu-gtk-module
+      - dotnet-host
+      - dotnet-runtime
+      - dotnet-sdk
+      - file
+      - gtk3
+      - jetbrains-toolbox
+      - libappindicator-gtk3
+      - librsvg
+      - libvips
+      - webkit2gtk

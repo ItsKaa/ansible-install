@@ -2,15 +2,18 @@
 - name: Install base packages
   pacman:
     name:
+      - accountsservice
       - base
       - base-devel
-      - cryptsetup
       - bash-completion
-      - device-mapper
       - bind
+      - cronie
+      - cryptsetup
+      - curl
+      - device-mapper
       - dnsmasq
-      - git
       - e2fsprogs
+      - git
       - inetutils
       - jfsutils
       - linux
@@ -23,21 +26,22 @@
       - mdadm
       - nano
       - netctl
+      - networkmanager
+      - openssh
+      - openssl
       - perl
+      - python3
+      - sudo
       - sysfsutils
       - texinfo
       - usbutils
       - vi
+      - wget
       - xfsprogs
-      - sudo
-      - networkmanager
-      - openssh
-      - python3
     state: present
 
-
-- name: Install base packages
-  pacman:
-    name:
-      - accountsservice
-      - discover
+- name: Cron service running
+  systemd:
+    name: cronie.service
+    state: started
+    enabled: true

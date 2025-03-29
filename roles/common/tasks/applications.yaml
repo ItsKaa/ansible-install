@@ -1,0 +1,57 @@
+---
+- name: Install applications
+  become: true
+  become_user: "{{ builduser_name }}"
+  yay:
+    name:
+      - bottles
+      - cpu-x
+      - discover
+      - ffmpeg
+      - floorp-bin
+      - gamemode
+      - geeqie
+      - gparted
+      - htop
+      - inkscape
+      - input-leap-git
+      - kdenlive
+      - kdotool-git
+      - keepassxc
+      - krita
+      - lact
+      - libreoffice-still
+      - lutris
+      - mangohud
+      - micro
+      - nextcloud-client
+      - notepadnext
+      - ntfs-3g
+      - pamac-aur
+      - piper
+      - powershell-bin
+      - protontricks
+      - protonup-qt
+      - pyenv
+      - pyenv-virtualenv
+      - python-qt-material
+      - python-virtualenv
+      - qbittorrent
+      - qemu-full
+      - qtqr
+      - scrcpy
+      - skanlite
+      - steamlink
+      - thunderbird
+      - virt-manager
+      - vlc
+      - waydroid-helper
+      - yt-dlp
+    state: present
+
+- name: Install flatpak applications
+  flatpak:
+    name:
+      - com.github.tchx84.Flatseal
+      - io.github.limo_app.limo
+    state: latest

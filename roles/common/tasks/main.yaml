@@ -1,11 +1,21 @@
 ---
+- name: Install yay
+  import_tasks: yay.yaml
+
 - name: Upgrade installed packages
-  pacman:
+  yay:
     upgrade: true
     update_cache: true
 
-- name: Setup base packages
+- name: Install base packages
   import_tasks: base.yaml
 
-- name: Setup fonts
+- name: Install fonts
   import_tasks: fonts.yaml
+
+- name: Install development packages
+  import_tasks: development.yaml
+
+- name: Install applications
+  import_tasks: applications.yaml
+

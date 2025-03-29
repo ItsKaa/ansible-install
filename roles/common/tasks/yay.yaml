@@ -8,5 +8,5 @@
   import_role:
     name: makepkg
   vars:
-    packages:
+    makepkg_packages:
       - yay
