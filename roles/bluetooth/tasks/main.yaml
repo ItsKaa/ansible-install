@@ -1,0 +1,12 @@
+---
+- name: Enable bluetooth experimental
+  replace:
+    path: /etc/bluetooth/main.conf
+    regexp: '^(#(\s+)?(Experimental).*|(\s+)?(Experimental).*false)$'
+    replace: 'Experimental=true'
+
+- name: Restart bluetooth service
+  systemd:
+    name: bluetooth.service
+    state: restarted
+    enabled: true

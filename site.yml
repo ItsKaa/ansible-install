@@ -8,3 +8,4 @@
     - role: grub_edits
     - role: btrfs
     - role: samsung_g9_fix
+    - role: bluetooth
