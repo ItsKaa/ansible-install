@@ -1,0 +1,6 @@
+---
+- name: Copy Samsung Odyssey G9 LC49G95 Firmware Fix for 240Hz + VRR + HDR
+  import_tasks: copy_file.yaml
+
+- name: Update grub for Samsung Odyssey G9 LC49G95 Firmware Fix
+  import_tasks: update_grub.yaml

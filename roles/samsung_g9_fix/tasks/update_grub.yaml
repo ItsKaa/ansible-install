@@ -1,0 +1,8 @@
+---
+- name: Update grub for Samsung Odyssey G9 LC49G95 Firmware Fix
+  replace:
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT=''((?:(?!{{ samsung_g9_fix_grub_firmware_header + samsung_g9_display_port }}).)*)''$'
+    replace: 'GRUB_CMDLINE_LINUX_DEFAULT=''\1 {{ samsung_g9_fix_grub_firmware_header + samsung_g9_display_port }}:edid/g9.bin'''
+  notify:
+    - Generate grub config

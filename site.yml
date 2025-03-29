@@ -5,3 +5,5 @@
     - group_vars/all.yml
   roles:
     - role: common
+    - role: grub_edits
+    - role: samsung_g9_fix

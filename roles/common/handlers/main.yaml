@@ -1,0 +1,10 @@
+---
+- name: Generate grub config
+  command: "grub-mkconfig -o {{ grub_path }}"
+  register: grub_mkconfig_output
+  changed_when: grub_mkconfig_output.rc != 0
+
+- name: Generate mkinitcpio
+  command: "mkinitcpio -p {{ mkinitcpio_profile }}"
+  register: mkinitcpio_output
+  changed_when: mkinitcpio_output.rc != 0

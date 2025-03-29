@@ -1,0 +1,17 @@
+---
+- name: Grub replace OS probe line
+  replace:
+    path: /etc/default/grub
+    regexp: '^(#(\s+)?(GRUB_DISABLE_OS_PROBER).*|(\s+)?(GRUB_DISABLE_OS_PROBER).*true)$'
+    replace: 'GRUB_DISABLE_OS_PROBER=false'
+  notify:
+    - Generate grub config
+
+- name: Grub ensure OS prober line exists
+  lineinfile:
+    state: present
+    path: /etc/default/grub
+    line: 'GRUB_DISABLE_OS_PROBER=false'
+    regexp: '^GRUB_DISABLE_OS_PROBER=false$'
+  notify:
+    - Generate grub config

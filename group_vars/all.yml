@@ -1,2 +1,5 @@
 ---
 debug_print: true
+mkinitcpio_profile: linux
+grub_path: /boot/grub/grub.cfg
+samsung_g9_display_port: DP-1
