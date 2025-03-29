@@ -1,0 +1,11 @@
+---
+- name: Update btrfs submodule permissions
+  listen: btrfs mount set permissions
+  file:
+    path: "/{{ submodule.name }}"
+    owner: "{{ submodule.owner }}"
+    group: "{{ submodule.group }}"
+    mode: "{{ submodule.mode }}"
+  loop: "{{ btrfs_submodule_names }}"
+  loop_control:
+    loop_var: submodule

@@ -1,0 +1,23 @@
+---
+- name: Create btrfs submodules
+  community.general.btrfs_subvolume:
+    name: "/@{{ submodule.name }}"
+    filesystem_device: "{{ ansible_mounts | json_query('[?mount == `/`] | [0].device') }}"
+    automount: true
+  loop: "{{ btrfs_submodule_names }}"
+  loop_control:
+    loop_var: submodule
+
+- name: Mount created submodules
+  mount:
+    path: "/{{ submodule.name }}"
+    src: "UUID={{ ansible_mounts | json_query('[?mount == `/`] | [0].uuid') }}"
+    fstype: "btrfs"
+    opts: "subvol=/@{{ submodule.name }},defaults,noatime,compress=zstd,commit=120"
+    state: mounted
+  register: paths_mounted
+  loop: "{{ btrfs_submodule_names }}"
+  loop_control:
+    loop_var: submodule
+  notify:
+    - btrfs mount set permissions

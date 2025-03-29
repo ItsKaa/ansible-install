@@ -3,3 +3,16 @@ debug_print: true
 mkinitcpio_profile: linux
 grub_path: /boot/grub/grub.cfg
 samsung_g9_display_port: DP-1
+btrfs_submodule_names:
+  - name: virtual-machines
+    owner: "1000"
+    group: "libvirt-qemu"
+    mode: "0660"
+  - name: games
+    owner: "1000"
+    group: "1000"
+    mode: "0640"
+  - name: nextcloud
+    owner: "1000"
+    group: "1000"
+    mode: "0640"
