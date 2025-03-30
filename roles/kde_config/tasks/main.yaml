@@ -1,0 +1,20 @@
+---
+- name: Remove the screen edge triggers
+  become: true
+  become_user: "{{ unix_home_user }}"
+  ini_file:
+    path: "{{ lookup('env', 'HOME') }}/.config/kwinrc"
+    section: Effect-overview
+    option: BorderActivate
+    value: "9"
+    mode: '0644'
+
+- name: Disable mouse shake
+  become: true
+  become_user: "{{ unix_home_user }}"
+  ini_file:
+    path: "{{ lookup('env', 'HOME') }}/.config/kwinrc"
+    section: Plugins
+    option: shakecursorEnabled
+    value: "false"
+    mode: '0644'

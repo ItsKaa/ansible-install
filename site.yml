@@ -10,3 +10,4 @@
     - role: samsung_g9_fix
     - role: bluetooth
     - role: nextcloud
+    - role: kde_config
