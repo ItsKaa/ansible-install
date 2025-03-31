@@ -1,0 +1,49 @@
+---
+- name: Check if printer exists
+  shell: >
+    set -o pipefail && lpstat -p "{{ printer.name }}" | grep "enabled since"
+  register: lpstat_out
+  changed_when: false | bool
+  ignore_errors: true
+
+- name: Check driver
+  shell: >
+    set -o pipefail && lpinfo -m | grep "{{ printer.model }}" | cut -d ' ' -f 1
+  register: printer_driver_output
+  changed_when: printer_driver_output.rc != 0
+  when: lpstat_out.stdout == ""
+
+- name: Print driver
+  when: debug_print and lpstat_out.stdout == ""
+  debug:
+    msg: "Using printer driver '{{ printer_driver_output.stdout | default('everywhere', true) }}' for model {{ printer.model }}."
+
+- name: Add printer
+  when: lpstat_out.stdout == ""
+  command: >
+    lpadmin
+    -p "{{ printer.name }}" -E
+    -v "ipp://{{ printer.fqdn | default(printer.ip, true) }}/ipp"
+    -m "{{ printer_driver_output.stdout | default('everywhere', true) }}"
+  register: printer_lpadmin
+  changed_when: printer_lpadmin.rc != 0
+
+- name: Add printer debug output
+  when: debug_print and lpstat_out.stdout == ""
+  debug:
+    msg:
+      - "out: {{ printer_lpadmin.stdout }}"
+      - "err: {{ printer_lpadmin.stderr }}"
+
+- name: Enable the printer
+  when: lpstat_out.stdout == ""
+  command: cupsenable "{{ printer.name }}"
+  register: printer_cupsenable
+  changed_when: printer_cupsenable.rc != 0
+
+- name: Validate printer exists
+  when: lpstat_out.stdout == ""
+  shell: >
+    set -o pipefail && lpstat -p "{{ printer.name }}" | grep "enabled since"
+  register: lpstat_validate_out
+  changed_when: lpstat_validate_out.rc != 0

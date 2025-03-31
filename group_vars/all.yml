@@ -22,3 +22,8 @@ nextcloud_remotes:
     remote: ENTER_REMOTE_URL
     username: ENTER_NEXTCLOUD_USERNAME
     path: /nextcloud
+printer:
+  name: brother-dcp1610w
+  model: DCP-1610W
+  ip: 192.168.1.155 # required, SANE does not allow FQDN.
+  # fqdn: brother-dcp1610w.domain.tld # optional

@@ -1,0 +1,32 @@
+---
+- name: Check if scanner exists
+  shell: >
+    set -o pipefail && brsaneconfig4 -q | grep "{{ printer.name }}"
+  register: brsaneconfig4_check_out
+  changed_when: false | bool
+  ignore_errors: true
+
+- name: Add scanner
+  when: brsaneconfig4_check_out.stdout == ""
+  shell: >
+    brsaneconfig4 -a
+    name="{{ printer.name }}"
+    model="{{ printer.model }}"
+    ip="{{ printer.ip }}"
+  register: brsaneconfig4_out
+  changed_when: brsaneconfig4_out.rc != 0
+
+- name: Add printer debug output
+  when: debug_print and brsaneconfig4_check_out.stdout == ""
+  debug:
+    msg:
+      - "out: {{ brsaneconfig4_out.stdout }}"
+      - "err: {{ brsaneconfig4_out.stderr }}"
+
+- name: Validate scanner exists
+  when: brsaneconfig4_check_out.stdout == ""
+  shell: >
+    set -o pipefail && scanimage -L | grep "{{ printer.name }}"
+  register: scanimage_out
+  changed_when: false | bool
+  failed_when: "'is a' not in scanimage_out.stdout"

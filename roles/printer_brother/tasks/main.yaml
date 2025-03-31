@@ -1,0 +1,24 @@
+---
+- name: Install brother printer packages
+  become: true
+  become_user: "{{ builduser_name }}"
+  yay:
+    name:
+      - cups
+      - sane
+      - ghostscript
+      - brlaser
+      - brscan4
+    state: present
+
+- name: Start cups.service
+  systemd:
+    name: cups.service
+    state: started
+    enabled: true
+
+- name: Setup printer
+  import_tasks: printer.yaml
+
+- name: Setup scanner
+  import_tasks: scanner.yaml
