@@ -1,2 +1,2 @@
 # URL to use when downloading packages from AUR:
-aur_url: https://aur.archlinux.org/cgit/aur.git/snapshot/
+common_aur_url: https://aur.archlinux.org/cgit/aur.git/snapshot/

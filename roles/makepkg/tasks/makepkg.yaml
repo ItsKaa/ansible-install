@@ -27,7 +27,7 @@
     - name: Download package from AUR
       unarchive:
         remote_src: true
-        src: "{{ aur_url }}{{ package_name }}.tar.gz"
+        src: "{{ common_aur_url }}{{ package_name }}.tar.gz"
         dest: "{{ tempdir.path }}"
 
     - name: Run makepkg
