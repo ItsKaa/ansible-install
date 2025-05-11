@@ -1,0 +1,72 @@
+---
+- name: Install waydroid
+  become: true
+  become_user: "{{ builduser_name }}"
+  yay:
+    name:
+      - waydroid
+      - waydroid-helper
+      - waydroid-script-git
+    state: present
+
+- name: Check if waydroid image exists
+  stat:
+    path: "/var/lib/waydroid/images/system.img"
+  register: system_image_result
+
+- name: Setup waydroid
+  shell: |
+    waydroid init -s GAPPS
+    systemctl start waydroid-container.service
+  register: waydroid_init
+  changed_when: waydroid_init.rc != 0
+  when: not system_image_result.stat.exists
+
+- name: Delete waydroid log file when image already exists
+  file:
+    state: absent
+    path: "/var/lib/waydroid/waydroid.log"
+  when: system_image_result.stat.exists
+
+- name: Install libndk translation
+  shell: >
+    waydroid-extras -a 11 install libndk
+  register: waydroid_libndk
+  changed_when: waydroid_libndk.rc != 0
+
+- name: Waydroid run session
+  become: true
+  become_user: "{{ unix_home_user }}"
+  shell: >
+    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus XDG_RUNTIME_DIR=/run/user/$UID
+    waydroid session start &
+  register: waydroid_session_start
+  changed_when: waydroid_session_start.rc != 0
+
+- name: Wait until ADB is running
+  wait_for:
+    path: /var/lib/waydroid/waydroid.log
+    search_regex: "(already)?\\s?connected to"
+    timeout: 300
+
+- name: Waydroid update props
+  become: true
+  become_user: "{{ unix_home_user }}"
+  shell: >
+    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus XDG_RUNTIME_DIR=/run/user/$UID
+    waydroid prop set persist.waydroid.multi_windows true
+  register: waydroid_update_props
+  changed_when: waydroid_update_props.rc != 0
+
+- name: Waydroid get android id
+  shell: >
+    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus XDG_RUNTIME_DIR=/run/user/$UID
+    waydroid shell
+    sqlite3 /data/data/com.google.android.gsf/databases/gservices.db 'select * from main where name = "android_id";'
+  register: waydroid_android_id
+  changed_when: waydroid_android_id.rc != 0
+
+- name: Print android id
+  ansible.builtin.debug:
+    msg: "Android ID: {{ waydroid_android_id.stdout | split('|') | last }}. Activate on https://www.google.com/android/uncertified"
+  when: waydroid_android_id.stdout != ""
