@@ -42,10 +42,16 @@
       - skanlite
       - steamlink
       - thunderbird
+      - tree
       - virt-manager
       - vlc
-      - waydroid-helper
       - yt-dlp
+      - wl-clipboard
+      - tesseract
+      - tesseract-data-eng
+      - tesseract-data-jpn
+      - tesseract-data-chi_sim
+      - waifu2x-ncnn-vulkan
     state: present
 
 - name: Install flatpak applications
