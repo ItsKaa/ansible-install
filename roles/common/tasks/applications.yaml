@@ -4,33 +4,26 @@
   become_user: "{{ builduser_name }}"
   yay:
     name:
-      - bottles
       - cpu-x
       - discover
       - ffmpeg
       - floorp-bin
-      - gamemode
       - geeqie
       - gparted
       - htop
       - inkscape
-      - input-leap-git
+      - input-leap
       - kdenlive
       - kdotool-git
       - keepassxc
       - krita
-      - lact
       - libreoffice-still
-      - lutris
-      - mangohud
       - micro
       - notepadnext
       - ntfs-3g
       - pamac-aur
       - piper
       - powershell-bin
-      - protontricks
-      - protonup-qt
       - pyenv
       - pyenv-virtualenv
       - python-qt-material
@@ -39,7 +32,6 @@
       - qtqr
       - scrcpy
       - skanlite
-      - steamlink
       - thunderbird
       - tree
       - vlc

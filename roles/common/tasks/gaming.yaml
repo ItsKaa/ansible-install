@@ -1,0 +1,16 @@
+---
+- name: Install applications
+  become: true
+  become_user: "{{ builduser_name }}"
+  yay:
+    name:
+      - lact
+      - gamemode
+      - mangohud
+      - lutris
+      - bottles
+      - protontricks
+      - protonup-qt
+      - steam
+      - steamlink
+    state: present
