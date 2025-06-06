@@ -1,0 +1,14 @@
+---
+- name: Install applications
+  become: true
+  become_user: "{{ builduser_name }}"
+  yay:
+    name:
+      - qemu-full
+      - virt-manager
+
+- name: Add user to libvirt group
+  user:
+    name: '{{ unix_home_user }}'
+    groups: libvirt
+    append: true

@@ -19,3 +19,5 @@
 - name: Install applications
   import_tasks: applications.yaml
 
+- name: Install virtualization applications
+  import_tasks: virtualization.yml
