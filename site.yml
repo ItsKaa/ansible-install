@@ -12,4 +12,5 @@
     - role: nextcloud
     - role: kde_config
     - role: printer_brother
+    - role: razer
     - role: waydroid

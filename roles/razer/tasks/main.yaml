@@ -1,0 +1,17 @@
+---
+- name: Install OpenRazer software
+  become: true
+  become_user: "{{ builduser_name }}"
+  yay:
+    name:
+      - openrazer-daemon
+      - openrazer-driver-dkms
+      - python-openrazer
+      - polychromatic
+    state: present
+
+- name: Add user to plugdev group (required for Polychromatic)
+  user:
+    name: '{{ unix_home_user }}'
+    groups: plugdev
+    append: true
