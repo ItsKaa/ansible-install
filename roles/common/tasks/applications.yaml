@@ -7,7 +7,9 @@
       - cpu-x
       - discover
       - ffmpeg
+      - firedragon-bin
       - floorp-bin
+      - firefox
       - geeqie
       - gparted
       - htop
@@ -35,6 +37,7 @@
       - thunderbird
       - tree
       - vlc
+      - vlc-plugins-all
       - yt-dlp
       - wl-clipboard
       - tesseract
