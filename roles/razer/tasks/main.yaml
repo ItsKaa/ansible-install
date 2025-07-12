@@ -8,6 +8,7 @@
       - openrazer-driver-dkms
       - python-openrazer
       - polychromatic
+      - razer-cli
     state: present
 
 - name: Add user to plugdev group (required for Polychromatic)
